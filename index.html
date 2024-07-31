@@ -4,42 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock </title>
+    <title>Clock</title>
     <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
         #clock {
             font-size: 100px;
             text-align: center;
             color: white;
-            font-family: Arial, sans-serif;
             background-color: black;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            display: inline-block;
         }
 
-        #clock:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: -50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 3px;
-            background-color: red;
-        }
-
+        #clock:before,
         #clock:after {
             content: "";
             position: absolute;
-            top: 50%;
-            right: -50%;
-            transform: translate(50%, 50%);
             width: 100%;
             height: 3px;
             background-color: red;
+        }
+
+        #clock:before {
+            top: 0;
+            left: 0;
+            transform: translateY(0);
+        }
+
+        #clock:after {
+            bottom: 0;
+            left: 0;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            #clock {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #clock {
+                font-size: 60px;
+            }
         }
     </style>
 </head>
@@ -49,15 +68,16 @@
     <script>
         function updateClock() {
             var now = new Date();
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            var seconds = now.getSeconds();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
 
             var time = hours + ":" + minutes + ":" + seconds;
             document.getElementById("clock").innerHTML = time;
         }
 
         setInterval(updateClock, 1000);
+        updateClock(); // Initialize the clock immediately
     </script>
 </body>
 
